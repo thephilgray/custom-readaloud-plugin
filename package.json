@@ -1,0 +1,27 @@
+{
+  "name": "custom-readaloud-plugin",
+  "version": "0.1.1",
+  "description": "Plugin designed to be used as an audio player/text highlighter alternative to the EPUB readaloud spec in some cases where automatic page-turning is not required. Listens to an audio element, adds a highlight class to elements with a data-attribute value for start time in seconds.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "NODE_ENV=production webpack",
+    "start": "webpack-dev-server --inline --hot"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/register": "^7.0.0",
+    "babel-loader": "^8.0.0-beta.4",
+    "config": "^1.30.0",
+    "html-webpack-plugin": "^3.2.0",
+    "postcss-loader": "^2.1.5",
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0",
+    "nodelist-foreach-polyfill": "^1.2.0"
+  }
+}
