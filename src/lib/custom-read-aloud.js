@@ -177,6 +177,7 @@ export class CustomReadAloud {
     this._removeHighlights();
     this.player.currentTime = this.audioClipBegin;
     this.current = this.audioClipBegin;
+    this.highlighted = null;
   }
   /**
    * Updates the audio element's playback rate.
