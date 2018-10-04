@@ -119,7 +119,10 @@ p {
                 customReader.changePlaybackRate(e.target.value);
                 customReader.play();
                 currentSpeedDisplay.textContent = e.target.value + 'x';
-            })
+            });
+            document.querySelector('#audioSample').addEventListener('playStateChange', function(e){
+                console.log(customReader.isPlaying);
+            });
         });
 
     </script>
