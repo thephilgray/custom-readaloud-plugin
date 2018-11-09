@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
+    "custom-event-polyfill": "^1.0.6",
     "nodelist-foreach-polyfill": "^1.2.0"
   }
 }

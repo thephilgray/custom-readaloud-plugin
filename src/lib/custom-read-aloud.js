@@ -40,6 +40,7 @@ export class CustomReadAloud {
     this.player = document.querySelector(this.audioEl);
     this.times = null;
     this.highlighted = null;
+    this.isPlaying = false;
 
     this._init();
   }
@@ -85,7 +86,18 @@ export class CustomReadAloud {
       }
 
       this.player.addEventListener('timeupdate', () => this._onTimeUpdate());
-      this.player.addEventListener('ended', () => this.stop());
+      this.player.addEventListener('ended', () => function(){
+        this.stop();
+      });
+      this.player.addEventListener('pause', () =>{
+        this.isPlaying = false;
+        this.player.dispatchEvent(this._onPlayStateChange());
+      });
+      this.player.addEventListener('play', () =>{
+        this.isPlaying = true;
+        this.player.dispatchEvent(this._onPlayStateChange());
+      });
+     
     }
   }
 
@@ -133,6 +145,15 @@ export class CustomReadAloud {
     }
   }
 
+  _onPlayStateChange(){
+    return new CustomEvent("playStateChange", {
+      bubbles: true,
+      detail: {
+        isPlaying: this.isPlaying
+      }
+    }); 
+  }
+
   /**
    * Sets `current` and plays the audio.
    *
@@ -156,6 +177,7 @@ export class CustomReadAloud {
     this.player.currentTime = this.current;
     this.player.playbackRate = this.playbackRate;
     this.player.play();
+
   }
   /**
    * Calls the audio element's `pause` method.
@@ -165,6 +187,7 @@ export class CustomReadAloud {
    */
   pause() {
     this.player.pause();
+
   }
   /**
    * Simulates `stop` functionality by calling the element's `pause` button and resetting its `currentTime` to 0. Also removes all highlights and resets `current`.
