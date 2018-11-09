@@ -3,7 +3,7 @@
  *
  * @class CustomReadAloud
  * @author Phil Gray
- * @version 0.1.1
+ * @version 0.1.3
  *
  */
 export class CustomReadAloud {
@@ -86,18 +86,25 @@ export class CustomReadAloud {
       }
 
       this.player.addEventListener('timeupdate', () => this._onTimeUpdate());
-      this.player.addEventListener('ended', () => function(){
+      this.player.addEventListener('ended', () => {
         this.stop();
       });
-      this.player.addEventListener('pause', () =>{
+
+      /* in case ended event never fires, set audioClipEnd with an actual value */
+      this.player.addEventListener('loadedmetadata', () => {
+        if (!this.audioClipEnd || this.audioClipEnd > this.player.duration) {
+          this.audioClipEnd = this.player.duration;
+        }
+      });
+
+      this.player.addEventListener('pause', () => {
         this.isPlaying = false;
         this.player.dispatchEvent(this._onPlayStateChange());
       });
-      this.player.addEventListener('play', () =>{
+      this.player.addEventListener('play', () => {
         this.isPlaying = true;
         this.player.dispatchEvent(this._onPlayStateChange());
       });
-     
     }
   }
 
@@ -139,19 +146,19 @@ export class CustomReadAloud {
     }
     if (
       this.audioClipEnd &&
-      this.current >= this._roundHalf(this.audioClipEnd)
+      this._roundHalf(this.current) === this._roundHalf(this.audioClipEnd)
     ) {
       this.stop();
     }
   }
 
-  _onPlayStateChange(){
-    return new CustomEvent("playStateChange", {
+  _onPlayStateChange() {
+    return new CustomEvent('playStateChange', {
       bubbles: true,
       detail: {
         isPlaying: this.isPlaying
       }
-    }); 
+    });
   }
 
   /**
@@ -177,7 +184,6 @@ export class CustomReadAloud {
     this.player.currentTime = this.current;
     this.player.playbackRate = this.playbackRate;
     this.player.play();
-
   }
   /**
    * Calls the audio element's `pause` method.
@@ -187,7 +193,6 @@ export class CustomReadAloud {
    */
   pause() {
     this.player.pause();
-
   }
   /**
    * Simulates `stop` functionality by calling the element's `pause` button and resetting its `currentTime` to 0. Also removes all highlights and resets `current`.
@@ -216,6 +221,7 @@ export class CustomReadAloud {
       console.log('playback rate must be a number');
     } else {
       this.playbackRate = rate;
+      this.player.playbackRate = this.playbackRate;
     }
   }
   /**
