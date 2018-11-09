@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const config = require('config');
+const packagejs = require('./package.json');
 
 /*-------------------------------------------------*/
 
@@ -10,7 +11,7 @@ module.exports = {
   mode: process.env.NODE_ENV ? process.env.NODE_ENV : 'development',
 
   // entry file(s)
-  entry: ['@babel/polyfill', './src/index.js'],
+  entry: ['./src/index.js'],
 
   // output file(s) and chunks
   output: {
@@ -18,7 +19,7 @@ module.exports = {
     libraryTarget: 'umd',
     libraryExport: 'default',
     path: path.resolve(__dirname, 'dist'),
-    filename: 'index.js',
+    filename: `custom-read-aloud-${packagejs.version}.js`,
     publicPath: config.get('publicPath')
   },
 
