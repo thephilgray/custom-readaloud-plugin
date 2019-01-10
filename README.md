@@ -1,5 +1,7 @@
 # Custom Read Aloud Plugin
 
+Demo: [https://codepen.io/phillipgray/pen/bOmeed](https://codepen.io/phillipgray/pen/bOmeed)
+
 ## Overview
 
 The custom-read-aloud plugin is designed as a text and audio
