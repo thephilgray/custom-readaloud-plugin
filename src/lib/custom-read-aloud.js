@@ -3,7 +3,7 @@
  *
  * @class CustomReadAloud
  * @author Phil Gray
- * @version 0.1.3
+ * @version 0.1.4
  *
  */
 export class CustomReadAloud {
