@@ -40,6 +40,7 @@ export class CustomReadAloud {
     this.player = document.querySelector(this.audioEl);
     this.times = null;
     this.highlighted = null;
+    this.previousHighlighted = null;
     this.isPlaying = false;
 
     this._init();
@@ -142,7 +143,10 @@ export class CustomReadAloud {
     const highlighted = this.times[this.current];
     /** Only call`_highlight` if `highlighted` has changed since the last time. */
     if (highlighted && highlighted !== this.highlighted) {
+      this.previousHighlighted = this.highlighted;
       this._highlight(highlighted);
+      /** emit a custom event with each new highlight */
+      this.player.dispatchEvent(this._onHighlightChange());
     }
     if (
       this.audioClipEnd &&
@@ -152,11 +156,32 @@ export class CustomReadAloud {
     }
   }
 
+  /**
+   * Custom event for highlight changes
+   *
+   * @returns {CustomEvent}
+   * @memberof CustomReadAloud
+   */
+  _onHighlightChange() {
+    return new CustomEvent('highlightChange', {
+      bubbles: true,
+      detail: {
+        ...this
+      }
+    });
+  }
+
+  /**
+   * Custom event for play state changes
+   *
+   * @returns {CustomEvent}
+   * @memberof CustomReadAloud
+   */
   _onPlayStateChange() {
     return new CustomEvent('playStateChange', {
       bubbles: true,
       detail: {
-        isPlaying: this.isPlaying
+        ...this
       }
     });
   }
