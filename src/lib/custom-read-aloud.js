@@ -79,11 +79,20 @@ export class CustomReadAloud {
       /** Event Listeners */
       if (this.touchTextToPlay) {
         /** may require `Array.forEach` polyfill for older browsers */
-        this.lines.forEach(span =>
-          span.addEventListener('click', () =>
-            this._movePlayhead(span.dataset.playhead)
-          )
-        );
+        this.lines.forEach(span => {
+          function lineClickHandler() {
+            this._movePlayhead(span.dataset.playhead);
+          }
+          span.addEventListener('click', lineClickHandler);
+          span.addEventListener('keyup', keyboardEvent => {
+            if (keyboardEvent.keyCode === 13) {
+              keyboardEvent.preventDefault();
+              lineClickHandler();
+            }
+          });
+          span.setAttribute('role', 'button');
+          span.setAttribute('tabindex', '0');
+        });
       }
 
       this.player.addEventListener('timeupdate', () => this._onTimeUpdate());
