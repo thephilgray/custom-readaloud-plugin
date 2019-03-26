@@ -1,6 +1,6 @@
 {
   "name": "custom-readaloud-plugin",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Plugin designed to be used as an audio player/text highlighter alternative to the EPUB readaloud spec in some cases where automatic page-turning is not required. Listens to an audio element, adds a highlight class to elements with a data-attribute value for start time in seconds.",
   "main": "dist/index.js",
   "scripts": {
