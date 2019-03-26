@@ -31,7 +31,7 @@ export class CustomReadAloud {
         dataAttribute: 'playhead',
         audioClipBegin: 0,
         audioClipEnd: null,
-        playbackRate: 1,
+        playbackRate: 1
       },
       options
     );
@@ -140,6 +140,7 @@ export class CustomReadAloud {
     this.highlighted = highlighted;
     if (previousHighlight) {
       previousHighlight.setAttribute('aria-pressed', false);
+      previousHighlight.blur();
     }
   }
 
@@ -189,8 +190,8 @@ export class CustomReadAloud {
     return new CustomEvent('highlightChange', {
       bubbles: true,
       detail: {
-        ...this,
-      },
+        ...this
+      }
     });
   }
 
@@ -204,8 +205,8 @@ export class CustomReadAloud {
     return new CustomEvent('playStateChange', {
       bubbles: true,
       detail: {
-        ...this,
-      },
+        ...this
+      }
     });
   }
 
