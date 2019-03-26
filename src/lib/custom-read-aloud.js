@@ -81,12 +81,14 @@ export class CustomReadAloud {
       if (this.touchTextToPlay) {
         /** may require `Array.forEach` polyfill for older browsers */
         this.lines.forEach(span => {
-          const lineClickHandler = () =>
+          const lineClickHandler = () => {
+            span.setAttribute('aria-pressed', 'true');
             this._movePlayhead(span.dataset.playhead);
+          };
 
           span.addEventListener('click', lineClickHandler);
-          span.addEventListener('keyup', keyboardEvent => {
-            if (keyboardEvent.keyCode === 13) {
+          span.addEventListener('keydown', keyboardEvent => {
+            if (keyboardEvent.keyCode === 13 || keyboardEvent.keyCode === 32) {
               keyboardEvent.preventDefault();
               lineClickHandler();
             }
@@ -129,9 +131,16 @@ export class CustomReadAloud {
    * @memberof CustomReadAloud
    */
   _highlight(highlighted) {
+    let previousHighlight = null;
+    if (this.highlighted) {
+      previousHighlight = this.highlighted;
+    }
     this._removeHighlights();
     highlighted.classList.add(this.highlightClass);
     this.highlighted = highlighted;
+    if (previousHighlight) {
+      previousHighlight.setAttribute('aria-pressed', false);
+    }
   }
 
   /**
@@ -141,7 +150,9 @@ export class CustomReadAloud {
    * @memberof CustomReadAloud
    */
   _removeHighlights() {
-    this.lines.forEach(span => span.classList.remove(this.highlightClass));
+    this.lines.forEach(span => {
+      span.classList.remove(this.highlightClass);
+    });
   }
 
   /**
