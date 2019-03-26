@@ -55,7 +55,8 @@ export class CustomReadAloud {
    * @returns {number}
    * @memberof CustomReadAloud
    */
-  static _roundHalf(n) {
+  // eslint-disable-next-line
+  _roundHalf(n) {
     return Number((Math.round(Number(n) * 2) / 2).toFixed(1));
   }
 
@@ -80,9 +81,9 @@ export class CustomReadAloud {
       if (this.touchTextToPlay) {
         /** may require `Array.forEach` polyfill for older browsers */
         this.lines.forEach(span => {
-          function lineClickHandler() {
+          const lineClickHandler = () =>
             this._movePlayhead(span.dataset.playhead);
-          }
+
           span.addEventListener('click', lineClickHandler);
           span.addEventListener('keyup', keyboardEvent => {
             if (keyboardEvent.keyCode === 13) {
