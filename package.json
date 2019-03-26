@@ -9,19 +9,19 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.1.0",
-    "@babel/preset-env": "^7.1.0",
-    "@babel/register": "^7.0.0",
-    "babel-loader": "^8.0.0-beta.4",
-    "config": "^1.30.0",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "@babel/register": "^7.4.0",
+    "babel-loader": "^8.0.5",
+    "config": "^1.31.0",
     "html-webpack-plugin": "^3.2.0",
-    "postcss-loader": "^2.1.5",
-    "webpack": "^4.12.0",
-    "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.4"
+    "postcss-loader": "^2.1.6",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.2.1"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.0.0",
+    "@babel/polyfill": "^7.4.0",
     "custom-event-polyfill": "^1.0.6",
     "nodelist-foreach-polyfill": "^1.2.0"
   }
