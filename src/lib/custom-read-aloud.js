@@ -31,7 +31,7 @@ export class CustomReadAloud {
         dataAttribute: 'playhead',
         audioClipBegin: 0,
         audioClipEnd: null,
-        playbackRate: 1
+        playbackRate: 1,
       },
       options
     );
@@ -55,7 +55,7 @@ export class CustomReadAloud {
    * @returns {number}
    * @memberof CustomReadAloud
    */
-  _roundHalf(n) {
+  static _roundHalf(n) {
     return Number((Math.round(Number(n) * 2) / 2).toFixed(1));
   }
 
@@ -123,6 +123,7 @@ export class CustomReadAloud {
     highlighted.classList.add(this.highlightClass);
     this.highlighted = highlighted;
   }
+
   /**
    * Iterates through `lines` and removes highlighted class from each.
    *
@@ -132,6 +133,7 @@ export class CustomReadAloud {
   _removeHighlights() {
     this.lines.forEach(span => span.classList.remove(this.highlightClass));
   }
+
   /**
    * Sets `this.current` for each `timeupdate` event emitted randomly 4 times each second by the audio element.
    *
@@ -166,8 +168,8 @@ export class CustomReadAloud {
     return new CustomEvent('highlightChange', {
       bubbles: true,
       detail: {
-        ...this
-      }
+        ...this,
+      },
     });
   }
 
@@ -181,8 +183,8 @@ export class CustomReadAloud {
     return new CustomEvent('playStateChange', {
       bubbles: true,
       detail: {
-        ...this
-      }
+        ...this,
+      },
     });
   }
 
@@ -210,6 +212,7 @@ export class CustomReadAloud {
     this.player.playbackRate = this.playbackRate;
     this.player.play();
   }
+
   /**
    * Calls the audio element's `pause` method.
    *
@@ -219,6 +222,7 @@ export class CustomReadAloud {
   pause() {
     this.player.pause();
   }
+
   /**
    * Simulates `stop` functionality by calling the element's `pause` button and resetting its `currentTime` to 0. Also removes all highlights and resets `current`.
    *
@@ -232,6 +236,7 @@ export class CustomReadAloud {
     this.current = this.audioClipBegin;
     this.highlighted = null;
   }
+
   /**
    * Updates the audio element's playback rate.
    *
@@ -242,13 +247,14 @@ export class CustomReadAloud {
   changePlaybackRate(newRate) {
     /** Dynamically typed for ease of use. */
     const rate = Number(newRate);
-    if (isNaN(rate)) {
+    if (Number.isNaN(rate)) {
       console.log('playback rate must be a number');
     } else {
       this.playbackRate = rate;
       this.player.playbackRate = this.playbackRate;
     }
   }
+
   /**
    * Calls `_movePlayhead` with a new time in seconds.
    *
@@ -259,7 +265,7 @@ export class CustomReadAloud {
   movePlayhead(newTime) {
     /** Dynamically typed for ease of use. */
     const time = Number(newTime);
-    if (isNaN(time)) {
+    if (Number.isNaN(time)) {
       this._movePlayhead(time);
     }
   }
