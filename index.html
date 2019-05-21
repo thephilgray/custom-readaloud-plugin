@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Custom Read Aloud</title>
     <style>
-      @import url('https://fonts.googleapis.com/css?family=Special+Elite');
+      @import url("https://fonts.googleapis.com/css?family=Special+Elite");
       /** Border-box reset **/
       *,
       *:before,
@@ -18,7 +18,7 @@
       }
 
       body {
-        font-family: 'Special Elite', cursive;
+        font-family: "Special Elite", cursive;
         background: linear-gradient(to right, rgba(0, 0, 0, 0.5), #003e58);
         min-height: 100vh;
         display: flex;
@@ -146,22 +146,22 @@
 
     <!-- plugin initialization -->
     <script type="text/javascript">
-      document.addEventListener('DOMContentLoaded', function() {
-        var customReader = new CustomReadAloud('.readaloud', '#audiosample', {
-          highlightClass: 'highlighted--red'
+      document.addEventListener("DOMContentLoaded", function() {
+        var customReader = new CustomReadAloud(".readaloud", "#audiosample", {
+          highlightClass: "highlighted--red"
         });
         var rateController = document.querySelector('[name="speedControl"]');
-        rateController.addEventListener('change', function(e) {
-          var currentSpeedDisplay = document.querySelector('.currentSpeed');
+        rateController.addEventListener("change", function(e) {
+          var currentSpeedDisplay = document.querySelector(".currentSpeed");
           customReader.pause();
           customReader.changePlaybackRate(e.target.value);
           customReader.play();
-          currentSpeedDisplay.textContent = e.target.value + 'x';
+          currentSpeedDisplay.textContent = e.target.value + "x";
         });
         document
-          .querySelector('#audioSample')
-          .addEventListener('playStateChange', function(e) {
-            console.log(customReader.isPlaying);
+          .querySelector("#audioSample")
+          .addEventListener("playStateChange", function(e) {
+            console.log("isPlaying: " + customReader.isPlaying);
           });
       });
     </script>
