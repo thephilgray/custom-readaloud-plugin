@@ -3,7 +3,7 @@
  *
  * @class CustomReadAloud
  * @author Phil Gray
- * @version 0.1.5
+ * @version 0.1.6
  *
  */
 export class CustomReadAloud {
@@ -18,6 +18,7 @@ export class CustomReadAloud {
    * @param {number} [options.audioClipBegin=0] - The start time for the audio clip.
    * @param {number|null} [options.audioClipEnd=null] - The end time for the audio clip.
    * @param {number} [options.playbackRate=1] - The initial playback rate for the audio element.
+   * @param {boolean} [options.stopAfterCurrent=false] - When the user moves the playhead, only play the current highlight and then stop.
    * @memberof CustomReadAloud
    */
   constructor(el, audioEl, options = {}) {
