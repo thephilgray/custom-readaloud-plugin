@@ -32,6 +32,7 @@ export class CustomReadAloud {
         audioClipBegin: 0,
         audioClipEnd: null,
         playbackRate: 1,
+        stopAfterCurrent: false,
       },
       options
     );
@@ -42,7 +43,7 @@ export class CustomReadAloud {
     this.highlighted = null;
     this.previousHighlighted = null;
     this.isPlaying = false;
-
+    this.stopAt = null;
     this._init();
   }
 
@@ -163,6 +164,12 @@ export class CustomReadAloud {
    */
   _onTimeUpdate() {
     this.current = this._roundHalf(this.player.currentTime);
+
+    if (this.stopAfterCurrent && this.current && this.current >= this.stopAt) {
+      this.stopAt = null;
+      return this.stop();
+    }
+
     const highlighted = this.times[this.current];
     /** Only call`_highlight` if `highlighted` has changed since the last time. */
     if (highlighted && highlighted !== this.highlighted) {
@@ -217,8 +224,27 @@ export class CustomReadAloud {
    * @memberof CustomReadAloud
    */
   _movePlayhead(newTime) {
-    this.current = this._roundHalf(newTime);
+    const current = this._roundHalf(newTime);
+    if (current && this.stopAfterCurrent) {
+      this.stopAt = this._getNextTime(current);
+    }
+    this.current = current;
     this.play();
+  }
+
+  /**
+   * Takes a time and finds the next
+   *
+   * @param {number, string} time
+   * @returns {number}
+   */
+  _getNextTime(time) {
+    const current = this._roundHalf(time);
+    const keys = Object.keys(this.times)
+      .map(str => Number(str))
+      .sort((a, b) => a - b);
+    const currentKey = keys.indexOf(current);
+    return keys[currentKey + 1] || this._roundHalf(this.audioClipEnd);
   }
 
   /** Public Methods */
