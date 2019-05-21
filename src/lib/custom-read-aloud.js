@@ -166,7 +166,12 @@ export class CustomReadAloud {
   _onTimeUpdate() {
     this.current = this._roundHalf(this.player.currentTime);
 
-    if (this.stopAfterCurrent && this.current && this.current >= this.stopAt) {
+    if (
+      this.stopAfterCurrent &&
+      this.current &&
+      this.stopAt &&
+      this.current >= this.stopAt
+    ) {
       this.stopAt = null;
       return this.stop();
     }
