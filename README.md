@@ -112,7 +112,7 @@ versions of iBooks on macOS 10.13.6 and iPad iOS 12.0.
 
 ```js
 // your code goes here
-var customReader = new CustomReadAloud('#readAloudText', '#audioPlayer');
+var customReader = new CustomReadAloud("#readAloudText", "#audioPlayer");
 ```
 
 5.  To create the highlight effect, add a rule for \`.highlighted\` to
@@ -134,10 +134,10 @@ instantiation, including the \`highlightClass\` property with the value
 of your preferred classname.
 
 ```js
-var options = { highlightClass: 'highlighted--red' };
+var options = { highlightClass: "highlighted--red" };
 var customReader = new CustomReadAloud(
-  '#readAloudText',
-  '#audioPlayer',
+  "#readAloudText",
+  "#audioPlayer",
   options
 );
 ```
@@ -148,10 +148,10 @@ The default data-attribute name is \`data-playhead\`. You can customize
 the unique part of the name after the \"data-\" prefix.
 
 ```js
-var options = { dataAttribute: 'start' };
+var options = { dataAttribute: "start" };
 var customReader = new CustomReadAloud(
-  '#readAloudText',
-  '#audioPlayer',
+  "#readAloudText",
+  "#audioPlayer",
   options
 );
 // now you can use data-start as the attribute, as in <span data-start="2">epub</span>
@@ -161,6 +161,10 @@ var customReader = new CustomReadAloud(
 
 Disable to prevent user from touching or clicking text to begin
 playback.
+
+## stopAfterCurrent _(default: false)_
+
+Only play the current highlight and then stop. Only to be used with `touchTextToPlay`; does not affect normal playback.
 
 ## audioClipBegin _(default: 0)_
 
@@ -182,16 +186,16 @@ defaults, so the argument is optional.
 
 ```js
 var options = {
-  dataAttribute: 'start',
-  highlightClass: 'readAloudHighlight',
+  dataAttribute: "start",
+  highlightClass: "readAloudHighlight",
   audioClipBegin: 3.5111,
   audioClipEnd: 21.2,
   touchTextToPlay: false,
   playbackRate: 1.5
 };
 var customReader = new CustomReadAloud(
-  '#readAloudText',
-  '#audioPlayer',
+  "#readAloudText",
+  "#audioPlayer",
   options
 );
 ```
@@ -233,11 +237,11 @@ highlights and resets \`current\`.
 <button onclick="customReader.stop()">Stop</button>
 ```
 
-## movePlayhead*( newTime {number \| string} )*
+## movePlayhead _( newTime {number \| string} )_
 
 The initial playback rate for the audio element.
 
-## changePlaybackRate*( newRate {number \| string} )*
+## changePlaybackRate _( newRate {number \| string} )_
 
 Updates the audio element\'s playback rate.
 
@@ -297,3 +301,7 @@ To subscribe to the event:
        };
     );
 ```
+
+## highlightChange
+
+Dispatched whenver the highlighted element changes.
