@@ -5,7 +5,7 @@ import Timer from './timer';
  *
  * @class CustomReadAloud
  * @author Phil Gray
- * @version 0.1.7
+ * @version 0.2.0
  *
  */
 export class CustomReadAloud {
@@ -35,7 +35,7 @@ export class CustomReadAloud {
         audioClipBegin: 0,
         audioClipEnd: null,
         playbackRate: 1,
-        stopAfterCurrent: false,
+        stopAfterCurrent: false
       },
       options
     );
@@ -209,8 +209,8 @@ export class CustomReadAloud {
     return new CustomEvent('highlightChange', {
       bubbles: true,
       detail: {
-        ...this,
-      },
+        ...this
+      }
     });
   }
 
@@ -224,8 +224,8 @@ export class CustomReadAloud {
     return new CustomEvent('playStateChange', {
       bubbles: true,
       detail: {
-        ...this,
-      },
+        ...this
+      }
     });
   }
 
