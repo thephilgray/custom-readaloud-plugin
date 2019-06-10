@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Custom Read Aloud</title>
     <style>
-      @import url("https://fonts.googleapis.com/css?family=Special+Elite");
+      @import url('https://fonts.googleapis.com/css?family=Special+Elite');
       /** Border-box reset **/
       *,
       *:before,
@@ -18,7 +18,7 @@
       }
 
       body {
-        font-family: "Special Elite", cursive;
+        font-family: 'Special Elite', cursive;
         background: linear-gradient(to right, rgba(0, 0, 0, 0.5), #003e58);
         min-height: 100vh;
         display: flex;
@@ -101,67 +101,83 @@
         </h1>
         <p><span data-playhead="5">By Emily Dickinson</span></p>
         <p>
-          <span data-playhead="13">There is</span>
-          <span data-playhead="13.5">no Frigate</span>
-          <span data-playhead="14">like</span>
-          <span data-playhead="14.5">a Book</span>
+          <span data-playhead="13.2">There </span
+          ><span data-playhead="13.5">is </span
+          ><span data-playhead="13.7">no </span
+          ><span data-playhead="13.9">Frigate </span
+          ><span data-playhead="14.3">like </span
+          ><span data-playhead="14.5">a </span
+          ><span data-playhead="14.7">Book </span>
         </p>
         <p>
-          <span data-playhead="15">To take us</span>
-          <span data-playhead="15.5">Lands</span>
-          <span data-playhead="16">away</span>
+          <span data-playhead="14.9">To </span
+          ><span data-playhead="15.1">take </span
+          ><span data-playhead="15.3">us </span
+          ><span data-playhead="15.5">Lands </span
+          ><span data-playhead="16.1">away </span>
         </p>
         <p>
-          <span data-playhead="17">Nor any</span>
-          <span data-playhead="17.5"> Coursers</span>
-          <span data-playhead="18">like</span>
-          <span data-playhead="18.5">a Page</span>
+          <span data-playhead="17.2">Nor </span
+          ><span data-playhead="17.5">any </span
+          ><span data-playhead="17.6">Coursers </span
+          ><span data-playhead="18.2">like </span
+          ><span data-playhead="18.4">a </span
+          ><span data-playhead="18.5">Page </span>
         </p>
         <p>
-          <span data-playhead="19">Of prancing</span>
-          <span data-playhead="19.5">Poetry –</span>
+          <span data-playhead="19">Of </span
+          ><span data-playhead="19.3">prancing </span
+          ><span data-playhead="19.8">Poetry – </span>
         </p>
         <p>
-          <span data-playhead="21.5">This Traverse</span>
-          <span data-playhead="22.5">may the poorest</span>
-          <span data-playhead="23">take</span>
+          <span data-playhead="21.4">This </span
+          ><span data-playhead="21.8">Traverse </span
+          ><span data-playhead="22.4">may </span
+          ><span data-playhead="22.6">the </span
+          ><span data-playhead="22.8">poorest </span
+          ><span data-playhead="23.2">take </span>
         </p>
         <p>
-          <span data-playhead="23.5">Without</span>
-          <span data-playhead="24">oppress of</span>
-          <span data-playhead="25">Toll –</span>
+          <span data-playhead="23.9">Without </span
+          ><span data-playhead="24.1">oppress </span
+          ><span data-playhead="24.4">of </span
+          ><span data-playhead="24.8">Toll – </span>
         </p>
         <p>
-          <span data-playhead="26">How frugal</span>
-          <span data-playhead="26.5">is the</span>
-          <span data-playhead="27">Chariot</span>
+          <span data-playhead="26.2">How </span
+          ><span data-playhead="26.4">frugal </span
+          ><span data-playhead="26.8">is </span
+          ><span data-playhead="27">the </span
+          ><span data-playhead="27.2">Chariot </span>
         </p>
         <p>
-          <span data-playhead="28">That bears</span>
-          <span data-playhead="29">a Human</span>
-          <span data-playhead="29.5">Soul –</span>
+          <span data-playhead="28.1">That </span
+          ><span data-playhead="28.4">bears </span
+          ><span data-playhead="28.9">the </span
+          ><span data-playhead="29.2">Human </span
+          ><span data-playhead="29.7">Soul – </span>
         </p>
       </div>
     </div>
 
     <!-- plugin initialization -->
     <script type="text/javascript">
-      document.addEventListener("DOMContentLoaded", function() {
-        var customReader = new CustomReadAloud(".readaloud", "#audiosample", {
-          highlightClass: "highlighted--red"
+      document.addEventListener('DOMContentLoaded', function() {
+        var customReader = new CustomReadAloud('.readaloud', '#audiosample', {
+          highlightClass: 'highlighted--red'
         });
         var rateController = document.querySelector('[name="speedControl"]');
-        rateController.addEventListener("change", function(e) {
-          var currentSpeedDisplay = document.querySelector(".currentSpeed");
+        rateController.addEventListener('change', function(e) {
+          var currentSpeedDisplay = document.querySelector('.currentSpeed');
           customReader.pause();
           customReader.changePlaybackRate(e.target.value);
           customReader.play();
-          currentSpeedDisplay.textContent = e.target.value + "x";
+          currentSpeedDisplay.textContent = e.target.value + 'x';
         });
         document
-          .querySelector("#audioSample")
-          .addEventListener("playStateChange", function(e) {
-            console.log("isPlaying: " + customReader.isPlaying);
+          .querySelector('#audioSample')
+          .addEventListener('playStateChange', function(e) {
+            console.log('isPlaying: ' + customReader.isPlaying);
           });
       });
     </script>

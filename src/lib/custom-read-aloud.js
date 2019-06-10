@@ -1,9 +1,11 @@
+import Timer from './timer';
+
 /**
  * Listens to an audio element, adds a highlight class to elements with a data-attribute value for start time in seconds.
  *
  * @class CustomReadAloud
  * @author Phil Gray
- * @version 0.1.6
+ * @version 0.2.0
  *
  */
 export class CustomReadAloud {
@@ -37,7 +39,7 @@ export class CustomReadAloud {
       },
       options
     );
-    this.current = this._roundHalf(this.audioClipBegin);
+    this.current = this._roundTenth(this.audioClipBegin);
     this.lines = this.el.querySelectorAll(`[data-${this.dataAttribute}]`);
     this.player = document.querySelector(this.audioEl);
     this.times = null;
@@ -45,21 +47,23 @@ export class CustomReadAloud {
     this.previousHighlighted = null;
     this.isPlaying = false;
     this.stopAt = null;
+    this.timer = new Timer(this._onTimeUpdate.bind(this), 10);
     this._init();
   }
 
   /** Utility Methods */
 
   /**
-   * Rounds a number to the nearest 0.5.
+   * Rounds a number to the nearest 0.1.
    *
    * @param {number} n
    * @returns {number}
    * @memberof CustomReadAloud
    */
+
   // eslint-disable-next-line
-  _roundHalf(n) {
-    return Number((Math.round(Number(n) * 2) / 2).toFixed(1));
+  _roundTenth(n) {
+    return Number((Math.round(Number(n) * 10) / 10).toFixed(1));
   }
 
   /**
@@ -72,7 +76,7 @@ export class CustomReadAloud {
     if (this.lines && this.player) {
       /** may require `Array.from` polyfill for older browsers */
       this.times = Array.from(this.lines).reduce((acc, curr) => {
-        const roundedTime = this._roundHalf(curr.dataset.playhead);
+        const roundedTime = this._roundTenth(curr.dataset.playhead);
         if (!acc[roundedTime]) {
           acc[roundedTime] = curr;
         }
@@ -100,9 +104,9 @@ export class CustomReadAloud {
         });
       }
 
-      this.player.addEventListener('timeupdate', () => this._onTimeUpdate());
       this.player.addEventListener('ended', () => {
         this.stop();
+        this.timer.stop();
       });
 
       /* in case ended event never fires, set audioClipEnd with an actual value */
@@ -114,10 +118,12 @@ export class CustomReadAloud {
 
       this.player.addEventListener('pause', () => {
         this.isPlaying = false;
+        this.timer.stop();
         this.player.dispatchEvent(this._onPlayStateChange());
       });
       this.player.addEventListener('play', () => {
         this.isPlaying = true;
+        this.timer.start();
         this.player.dispatchEvent(this._onPlayStateChange());
       });
     }
@@ -163,9 +169,9 @@ export class CustomReadAloud {
    * @returns {void}
    * @memberof CustomReadAloud
    */
-  _onTimeUpdate() {
-    this.current = this._roundHalf(this.player.currentTime);
 
+  _onTimeUpdate() {
+    this.current = this._roundTenth(this.player.currentTime);
     if (
       this.stopAfterCurrent &&
       this.current &&
@@ -186,7 +192,7 @@ export class CustomReadAloud {
     }
     if (
       this.audioClipEnd &&
-      this._roundHalf(this.current) === this._roundHalf(this.audioClipEnd)
+      this._roundTenth(this.current) === this._roundTenth(this.audioClipEnd)
     ) {
       this.stop();
     }
@@ -230,7 +236,7 @@ export class CustomReadAloud {
    * @memberof CustomReadAloud
    */
   _movePlayhead(newTime) {
-    const current = this._roundHalf(newTime);
+    const current = this._roundTenth(newTime);
     if (current && this.stopAfterCurrent) {
       this.stopAt = this._getNextTime(current);
     }
@@ -245,12 +251,12 @@ export class CustomReadAloud {
    * @returns {number}
    */
   _getNextTime(time) {
-    const current = this._roundHalf(time);
+    const current = this._roundTenth(time);
     const keys = Object.keys(this.times)
       .map(str => Number(str))
       .sort((a, b) => a - b);
     const currentKey = keys.indexOf(current);
-    return keys[currentKey + 1] || this._roundHalf(this.audioClipEnd);
+    return keys[currentKey + 1] || this._roundTenth(this.audioClipEnd);
   }
 
   /** Public Methods */
